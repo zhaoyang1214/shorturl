@@ -1,0 +1,6 @@
+app:
+  name: ${APP_NAME}
+  env: ${APP_ENV}
+  debug: ${APP_DEBUG}
+  aliases:
+    # alias: instance

@@ -1,0 +1,37 @@
+definitions:
+  entity.JSONResult:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /helloworld:
+    get:
+      consumes:
+      - application/json
+      description: test
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: helloworld
+          schema:
+            allOf:
+            - $ref: '#/definitions/entity.JSONResult'
+            - properties:
+                code:
+                  type: integer
+                data:
+                  type: string
+                message:
+                  type: string
+              type: object
+      summary: test
+      tags:
+      - ""
+swagger: "2.0"

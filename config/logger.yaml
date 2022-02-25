@@ -1,0 +1,83 @@
+logger:
+  default: stack
+  channels:
+    stack:
+      driver: stack
+      channels:
+        - single
+        - stderr
+      #development: false
+      disableCaller: true
+      #callerSkip: 2
+      #disableStacktrace: false
+      #sampling:
+      #  initial: 100
+      #  thereafter: 100
+      #initialFields:
+        #app: ginco
+    single:
+      driver: single
+      level: debug
+      path: logs/ginco.log
+      encoding: json
+      disableCaller: true
+    daily:
+      driver: rotation
+      level: debug
+      path: "logs/ginco-%Y-%m-%d.log" # %Y%m%d%H%M%S
+      maxAge: 168 # 24 * 7 hour
+      rotationTime: 24 # 24 hour
+      rotationCount: -1
+      rotationSize: 0 # bytes
+      #disableCaller: true
+    hourly:
+      driver: rotation
+      level: debug
+      path: "logs/ginco-%Y-%m-%d-%H.log" # %Y%m%d%H%M%S
+      maxAge: 168 # 24 * 7 hour
+      rotationTime: 1 # 1 hour
+    stderr:
+      driver: stderr
+######################## Core config start #######################
+      level: debug
+      encoding: console # json or console
+      encoderConfig:
+        #messageKey: msg
+        #levelKey: level
+        #timeKey: ts
+        #nameKey: logger
+        #callerKey: caller
+        #functionKey:
+        #stacktraceKey: stacktrace
+        #lineEnding: "\n"
+        #timeEncoder: "2006-01-02 15:04:05.000"
+        callerEncoder: short # short or full
+        #consoleSeparator: "\t"
+######################## Core config end #########################
+######################## Option config start #####################
+      #development: false
+      #disableCaller: false
+      #callerSkip: 2
+      #disableStacktrace: false
+      #sampling:
+      #  initial: 100
+      #  thereafter: 100
+      #initialFields:
+        #app: ginco
+######################## Option config end #######################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

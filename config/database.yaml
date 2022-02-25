@@ -1,0 +1,45 @@
+database:
+  default: mysql
+  connections:
+    mysql:
+      driver: mysql
+      dsn: ${MYSQL_DSN}
+      conn_max_idle_time: 1 # 1 hour
+      conn_max_lifetime: 24 # 24 hour
+      max_idle_conns: 100
+      max_open_conns: 200
+    mysql2:
+      driver: mysql
+      conn_max_idle_time: 1 # 1 hour
+      conn_max_lifetime: 24 # 24 hour
+      max_idle_conns: 100
+      max_open_conns: 200
+      write:
+        -
+          dsn: "user:pass@tcp(127.0.0.1:3306)/dbname1?charset=utf8mb4&parseTime=True&loc=Local"
+      read:
+        -
+          dsn: "user:pass@tcp(127.0.0.1:3306)/dbname2?charset=utf8mb4&parseTime=True&loc=Local"
+        -
+          dsn: "user:pass@tcp(127.0.0.1:3306)/dbname3?charset=utf8mb4&parseTime=True&loc=Local"
+    sqlite:
+      driver: sqlite
+      dsn: "./runtime/database/ginco.db"
+      conn_max_idle_time: 1 # 1 hour
+      conn_max_lifetime: 24 # 24 hour
+      max_idle_conns: 100
+      max_open_conns: 200
+    sqlserver:
+      driver: sqlserver
+      dsn: "sqlserver://user:pass@localhost:9930?database=dbname"
+      conn_max_idle_time: 1 # 1 hour
+      conn_max_lifetime: 24 # 24 hour
+      max_idle_conns: 100
+      max_open_conns: 200
+    postgres:
+      driver: postgres
+      dsn: "host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable TimeZone=Asia/Shanghai"
+      conn_max_idle_time: 1 # 1 hour
+      conn_max_lifetime: 24 # 24 hour
+      max_idle_conns: 100
+      max_open_conns: 200

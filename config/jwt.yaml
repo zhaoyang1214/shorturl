@@ -1,0 +1,15 @@
+jwt:
+  algo: "HS256"
+  secret: "gcEPZ5Uc9fAqhpxt8wkvCKTr9MLf95hZG838AgMsn9FrjJDH7zzXsiGlVDVIWJib"
+  ttl: 1440 # Minute
+  refresh_ttl: 20160 # Minute
+  identity_key: "sub"
+  token_lookup: "header: Authorization, query: token, cookie: jwt"
+  token_head_name: "Bearer"
+  private_key_file:
+  private_key:
+  private_key_passphrase:
+  public_key_file:
+  public_key:
+
+
