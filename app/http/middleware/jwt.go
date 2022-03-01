@@ -1,10 +1,8 @@
 package middleware
 
 import (
-	"errors"
 	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
-	"github.com/zhaoyang1214/ginco/app/entity"
 	"github.com/zhaoyang1214/ginco/app/model"
 	"github.com/zhaoyang1214/ginco/framework/contract"
 	"github.com/zhaoyang1214/ginco/framework/database"
@@ -22,7 +20,7 @@ func JWT(app contract.Application) *jwt.GinJWTMiddleware {
 		Key:              []byte(jwtConf.GetString("secret")),
 		Timeout:          jwtConf.GetDuration("ttl") * time.Minute,
 		MaxRefresh:       jwtConf.GetDuration("refresh_ttl") * time.Minute,
-		Authenticator: func(c *gin.Context) (interface{}, error) {
+		/*Authenticator: func(c *gin.Context) (interface{}, error) {
 			var loginVals entity.Login
 			if err := c.ShouldBind(&loginVals); err != nil {
 				return nil, jwt.ErrMissingLoginValues
@@ -44,7 +42,7 @@ func JWT(app contract.Application) *jwt.GinJWTMiddleware {
 				}
 			}
 			return jwt.MapClaims{}
-		},
+		},*/
 		/*IdentityHandler: func(c *gin.Context) interface{} {
 			claims := jwt.ExtractClaims(c)
 			key := jwtConf.GetString("identity_key")

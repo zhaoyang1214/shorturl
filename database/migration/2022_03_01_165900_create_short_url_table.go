@@ -8,12 +8,12 @@ import (
 
 func init() {
 	migrations = append(migrations, &gormigrate.Migration{
-		ID: "20220222140000",
+		ID: "20220301165900",
 		Migrate: func(tx *gorm.DB) error {
-			return tx.AutoMigrate(&model.User{})
+			return tx.AutoMigrate(&model.ShortUrl{})
 		},
 		Rollback: func(tx *gorm.DB) error {
-			return tx.Migrator().DropTable("users")
+			return tx.Migrator().DropTable(model.ShortUrl{}.TableName())
 		},
 	})
 }
