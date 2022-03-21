@@ -4,9 +4,9 @@
 redis:
   default:
     addrs:
-      - "127.0.0.1:6379"
+      - ${REDIS_ADDR}
     db: 0 # Only single-node and failover clients.
-    password:
+    password: ${REDIS_PASSWORDS}
     #sentinel_password:
     #username:
     #max_retries: 3 # Default is 3 retries; -1 (not 0) disables retries.
@@ -29,11 +29,8 @@ redis:
     #route_randomly: #（bool）Allows routing read-only commands to the random master or slave node.
     ########Only failover clients.##########
     #master_name:
-  other_redis:
-    addrs:
-      - "127.0.0.1:6379"
-    db: 1
   cache:
     addrs:
-      - "127.0.0.1:6379"
-    db: 2
+      - ${REDIS_ADDR}
+    db: 1
+    password: ${REDIS_PASSWORDS}

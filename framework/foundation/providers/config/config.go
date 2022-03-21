@@ -62,14 +62,8 @@ func (c *Config) Build(container contract.Container, params ...interface{}) (int
 
 	if envFileExists {
 		for _, key := range conf.AllKeys() {
-			value := conf.GetString(key)
-			if strings.HasPrefix(value, "${") && strings.HasSuffix(value, "}") {
-				envKey := strings.Trim(value, "${}")
-				/*v := conf.Get(envKey)
-				if v == nil {
-					return nil, errors.New("Env Key not found:" + envKey)
-				}*/
-				newCfg := generateMap(strings.Split(key, "."), conf.GetString(envKey))
+			if r, value := replace(conf.Get(key), conf); r {
+				newCfg := generateMap(strings.Split(key, "."), value)
 				if err = conf.MergeConfigMap(newCfg); err != nil {
 					return nil, err
 				}
@@ -86,4 +80,39 @@ func generateMap(keys []string, value interface{}) map[string]interface{} {
 	}
 	v := generateMap(keys[1:], value)
 	return map[string]interface{}{keys[0]: v}
+}
+
+func replace(value interface{}, conf *config.Config) (r bool, v interface{}) {
+	switch value.(type) {
+	case string:
+		s := value.(string)
+		if strings.HasPrefix(s, "${") && strings.HasSuffix(s, "}") {
+			r = true
+			s = conf.GetString(strings.Trim(s, "${}"))
+		}
+		v = s
+	case []interface{}:
+		s := value.([]interface{})
+		var r1 bool
+		for i, v1 := range s {
+			r1, s[i] = replace(v1, conf)
+			if r1 {
+				r = r1
+			}
+		}
+		v = s
+	case map[interface{}]interface{}:
+		s := value.(map[interface{}]interface{})
+		var r1 bool
+		for i, v1 := range s {
+			r1, s[i] = replace(v1, conf)
+			if r1 {
+				r = r1
+			}
+		}
+		v = s
+	default:
+		v = value
+	}
+	return
 }

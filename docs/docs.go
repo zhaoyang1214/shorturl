@@ -16,22 +16,29 @@ const docTemplate_swagger = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/helloworld": {
-            "get": {
-                "description": "test",
+        "/url": {
+            "post": {
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
-                    ""
+                "summary": "Url Create",
+                "parameters": [
+                    {
+                        "description": "UrlCreate info",
+                        "name": "root",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/shorturl.UrlCreateRequest"
+                        }
+                    }
                 ],
-                "summary": "test",
                 "responses": {
                     "200": {
-                        "description": "helloworld",
+                        "description": "OK",
                         "schema": {
                             "allOf": [
                                 {
@@ -44,7 +51,7 @@ const docTemplate_swagger = `{
                                             "type": "integer"
                                         },
                                         "data": {
-                                            "type": "string"
+                                            "$ref": "#/definitions/shorturl.UrlCreateResponse"
                                         },
                                         "message": {
                                             "type": "string"
@@ -67,6 +74,33 @@ const docTemplate_swagger = `{
                 },
                 "data": {},
                 "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "shorturl.UrlCreateRequest": {
+            "type": "object",
+            "required": [
+                "url"
+            ],
+            "properties": {
+                "domain": {
+                    "type": "string",
+                    "example": "http://xxx.xx"
+                },
+                "ttl": {
+                    "type": "integer"
+                },
+                "url": {
+                    "type": "string",
+                    "example": "http://xx.xx/a/b"
+                }
+            }
+        },
+        "shorturl.UrlCreateResponse": {
+            "type": "object",
+            "properties": {
+                "url": {
                     "type": "string"
                 }
             }

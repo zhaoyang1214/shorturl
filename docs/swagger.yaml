@@ -7,19 +7,43 @@ definitions:
       message:
         type: string
     type: object
+  shorturl.UrlCreateRequest:
+    properties:
+      domain:
+        example: http://xxx.xx
+        type: string
+      ttl:
+        type: integer
+      url:
+        example: http://xx.xx/a/b
+        type: string
+    required:
+    - url
+    type: object
+  shorturl.UrlCreateResponse:
+    properties:
+      url:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
-  /helloworld:
-    get:
+  /url:
+    post:
       consumes:
       - application/json
-      description: test
+      parameters:
+      - description: UrlCreate info
+        in: body
+        name: root
+        required: true
+        schema:
+          $ref: '#/definitions/shorturl.UrlCreateRequest'
       produces:
       - application/json
       responses:
         "200":
-          description: helloworld
+          description: OK
           schema:
             allOf:
             - $ref: '#/definitions/entity.JSONResult'
@@ -27,11 +51,9 @@ paths:
                 code:
                   type: integer
                 data:
-                  type: string
+                  $ref: '#/definitions/shorturl.UrlCreateResponse'
                 message:
                   type: string
               type: object
-      summary: test
-      tags:
-      - ""
+      summary: Url Create
 swagger: "2.0"
