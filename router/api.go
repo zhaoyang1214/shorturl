@@ -11,9 +11,9 @@ import (
 
 func registerApi(app contract.Application) {
 	r := app.GetI("router").(*gin.Engine)
-	//authMiddleware := middleware.JWT(app)
 	docs.SwaggerInfo_swagger.BasePath = "/api"
 	api := r.Group("/api")
+	//authMiddleware := middleware.JWT(app)
 	//api.Use(authMiddleware.MiddlewareFunc())
 	{
 		api.POST("/url", controller.UrlCreate(app))

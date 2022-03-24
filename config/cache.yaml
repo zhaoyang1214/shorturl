@@ -1,5 +1,5 @@
 cache:
-  default: redis
+  default: memory
   prefix: "su:"
   stores:
     redis:
@@ -8,7 +8,7 @@ cache:
     memory:
       driver: memory
       shards: 1024 # number of shards (must be a power of 2)
-      life_window: 10 # Minute, time after which entry can be evicted
+      life_window: 43200 # Minute, time after which entry can be evicted
       clean_window: 5 # Minute, Interval between removing expired entries (clean up).
       max_entries_in_window: 600000 # rps * lifeWindow, used only in initial memory allocation
       max_entry_size: 500 # max entry size in bytes, used only in initial memory allocation
