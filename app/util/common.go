@@ -8,8 +8,6 @@ import (
 
 const digits = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-const maxUint64 = 1<<64 - 1
-
 func FormatInt(u uint64, base int) string {
 	if base < 2 || base > len(digits) {
 		panic("FormatInt base error")
@@ -43,8 +41,9 @@ func ParseUint(s string, base int) (uint64, error) {
 			return 0, errors.New("string invalid")
 		}
 		ud := uint64(d)
+
 		b := uint64(math.Pow(float64(base), float64(j-i)))
-		if maxUint64/b < ud || maxUint64-a < ud*b {
+		if math.MaxUint64/b < ud || math.MaxUint64-a < ud*b {
 			return 0, errors.New("overflows uint64")
 		}
 
