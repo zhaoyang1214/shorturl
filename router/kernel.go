@@ -15,8 +15,9 @@ func Register(app contract.Application) {
 
 	r.Use(gin.Logger(), gin.Recovery())
 
-	r.GET("/", controller.Index)
-	r.GET("/:hash", controller.UrlRedirect(app))
+	r.GET("/", controller.NewIndex(app).Index)
+	s := controller.NewShortUrl(app)
+	r.GET("/:hash", s.Redirect)
 
-	registerApi(app)
+	registerApi(app, s)
 }

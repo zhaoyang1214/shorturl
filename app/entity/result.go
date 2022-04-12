@@ -1,6 +1,6 @@
 package entity
 
-type JSONResult struct {
+type ResultJSON struct {
 	Code    int         `json:"code"`
 	Message string      `json:"message"`
 	Data    interface{} `json:"data"`

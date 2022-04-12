@@ -2,10 +2,22 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/zhaoyang1214/ginco/framework/foundation/app"
+	"github.com/zhaoyang1214/ginco/framework/contract"
 	"net/http"
 )
 
-func Index(c *gin.Context) {
-	c.String(http.StatusOK, "Hello Ginco v"+app.Get().Version()+"\n")
+type Index struct {
+	*Controller
+}
+
+func NewIndex(app contract.Application) *Index {
+	return &Index{
+		&Controller{
+			app: app,
+		},
+	}
+}
+
+func (i Index) Index(c *gin.Context) {
+	c.String(http.StatusOK, "Hello Ginco v"+i.app.Version()+"\n")
 }

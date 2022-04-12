@@ -19,7 +19,7 @@ func NewApplication(basePath string) *Application {
 	var c = container.NewContainer()
 	a := &Application{
 		c,
-		"1.0.4",
+		"1.0.6",
 		"",
 	}
 

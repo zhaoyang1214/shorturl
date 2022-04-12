@@ -1,5 +1,5 @@
 definitions:
-  entity.JSONResult:
+  entity.ResultJSON:
     properties:
       code:
         type: integer
@@ -7,7 +7,7 @@ definitions:
       message:
         type: string
     type: object
-  shorturl.UrlCreateRequest:
+  entity.ShortUrlCreateRequest:
     properties:
       domain:
         example: http://xxx.xx
@@ -20,7 +20,7 @@ definitions:
     required:
     - url
     type: object
-  shorturl.UrlCreateResponse:
+  entity.ShortUrlCreateResponse:
     properties:
       url:
         type: string
@@ -38,7 +38,7 @@ paths:
         name: root
         required: true
         schema:
-          $ref: '#/definitions/shorturl.UrlCreateRequest'
+          $ref: '#/definitions/entity.ShortUrlCreateRequest'
       produces:
       - application/json
       responses:
@@ -46,12 +46,12 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/entity.JSONResult'
+            - $ref: '#/definitions/entity.ResultJSON'
             - properties:
                 code:
                   type: integer
                 data:
-                  $ref: '#/definitions/shorturl.UrlCreateResponse'
+                  $ref: '#/definitions/entity.ShortUrlCreateResponse'
                 message:
                   type: string
               type: object

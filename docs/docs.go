@@ -32,7 +32,7 @@ const docTemplate_swagger = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/shorturl.UrlCreateRequest"
+                            "$ref": "#/definitions/entity.ShortUrlCreateRequest"
                         }
                     }
                 ],
@@ -42,7 +42,7 @@ const docTemplate_swagger = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/entity.JSONResult"
+                                    "$ref": "#/definitions/entity.ResultJSON"
                                 },
                                 {
                                     "type": "object",
@@ -51,7 +51,7 @@ const docTemplate_swagger = `{
                                             "type": "integer"
                                         },
                                         "data": {
-                                            "$ref": "#/definitions/shorturl.UrlCreateResponse"
+                                            "$ref": "#/definitions/entity.ShortUrlCreateResponse"
                                         },
                                         "message": {
                                             "type": "string"
@@ -66,7 +66,7 @@ const docTemplate_swagger = `{
         }
     },
     "definitions": {
-        "entity.JSONResult": {
+        "entity.ResultJSON": {
             "type": "object",
             "properties": {
                 "code": {
@@ -78,7 +78,7 @@ const docTemplate_swagger = `{
                 }
             }
         },
-        "shorturl.UrlCreateRequest": {
+        "entity.ShortUrlCreateRequest": {
             "type": "object",
             "required": [
                 "url"
@@ -97,7 +97,7 @@ const docTemplate_swagger = `{
                 }
             }
         },
-        "shorturl.UrlCreateResponse": {
+        "entity.ShortUrlCreateResponse": {
             "type": "object",
             "properties": {
                 "url": {

@@ -9,14 +9,15 @@ import (
 	"github.com/zhaoyang1214/ginco/framework/contract"
 )
 
-func registerApi(app contract.Application) {
+func registerApi(app contract.Application, s *controller.ShortUrl) {
 	r := app.GetI("router").(*gin.Engine)
 	docs.SwaggerInfo_swagger.BasePath = "/api"
 	api := r.Group("/api")
 	//authMiddleware := middleware.JWT(app)
 	//api.Use(authMiddleware.MiddlewareFunc())
 	{
-		api.POST("/url", controller.UrlCreate(app))
+		api.POST("/url", s.Create)
+		api.GET("/url", s.List)
 	}
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
