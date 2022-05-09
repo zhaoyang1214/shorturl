@@ -25,10 +25,68 @@ definitions:
       url:
         type: string
     type: object
+  entity.ShortUrlListRequest:
+    properties:
+      page:
+        type: integer
+      size:
+        type: integer
+    type: object
+  entity.ShortUrlListResponse:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/entity.ShortUrlListResponseWithList'
+        type: array
+      total:
+        type: integer
+    type: object
+  entity.ShortUrlListResponseWithList:
+    properties:
+      created_at:
+        type: string
+      domain:
+        type: string
+      hash:
+        type: string
+      ttl:
+        type: integer
+      updated_at:
+        type: string
+      url:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
   /url:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: List info
+        in: body
+        name: root
+        required: true
+        schema:
+          $ref: '#/definitions/entity.ShortUrlListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/entity.ResultJSON'
+            - properties:
+                code:
+                  type: integer
+                data:
+                  $ref: '#/definitions/entity.ShortUrlListResponse'
+                message:
+                  type: string
+              type: object
+      summary: Url List
     post:
       consumes:
       - application/json

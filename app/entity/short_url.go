@@ -9,3 +9,21 @@ type ShortUrlCreateRequest struct {
 type ShortUrlCreateResponse struct {
 	Url string
 }
+
+type ShortUrlListRequest struct {
+	Pagination
+}
+
+type ShortUrlListResponseWithList struct {
+	Hash      string `json:"hash"`
+	Url       string `json:"url"`
+	Ttl       uint   `json:"ttl"`
+	Domain    string `json:"domain"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+type ShortUrlListResponse struct {
+	Total int64                          `json:"total"`
+	List  []ShortUrlListResponseWithList `json:"list"`
+}

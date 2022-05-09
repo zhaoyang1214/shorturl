@@ -60,7 +60,7 @@ func (s ShortUrl) Create(ucr entity.ShortUrlCreateRequest) (code int, data entit
 	hash62 := util.FormatInt(uint64(su.Hash), 62)
 	ttl := time.Duration(su.Ttl) * time.Second
 
-	if err := cache.Set(context.Background(), fmt.Sprintf(cachekey.ShortUrlInfo, hash62), []byte(su.Url), ttl); err != nil {
+	if err = cache.Set(context.Background(), fmt.Sprintf(cachekey.ShortUrlInfo, hash62), []byte(su.Url), ttl); err != nil {
 		err = errors.New("cache error, " + err.Error())
 		return
 	}
@@ -95,6 +95,22 @@ func (s ShortUrl) GetUrlByHash(hash string) (int, string, error) {
 	return http.StatusFound, su.Url, nil
 }
 
-func (s ShortUrl) List() {
-
+func (s ShortUrl) List(ulr entity.ShortUrlListRequest) (data entity.ShortUrlListResponse, err error) {
+	page, size := ulr.GetPage(), ulr.GetSize()
+	db := s.app.GetI("db").(*database.Database)
+	var total int64
+	var urls []model.ShortUrl
+	result := db.Limit(size).Offset((page - 1) * size).Find(&urls).Count(&total)
+	err = result.Error
+	for _, v := range urls {
+		data.List = append(data.List, entity.ShortUrlListResponseWithList{
+			Hash:      util.FormatInt(uint64(v.Hash), 62),
+			Url:       v.Url,
+			Ttl:       v.Ttl,
+			Domain:    v.Domain,
+			CreatedAt: v.CreatedAt.String(),
+			UpdatedAt: v.UpdatedAt.String(),
+		})
+	}
+	return
 }

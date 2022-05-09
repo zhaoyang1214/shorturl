@@ -52,6 +52,25 @@ func (s ShortUrl) Redirect(c *gin.Context) {
 	return
 }
 
+// Url List
+// @Summary Url List
+// @Accept json
+// @Produce json
+// @Param root body entity.ShortUrlListRequest true "List info"
+// @Success 200 {object} entity.ResultJSON{code=int,message=string,data=entity.ShortUrlListResponse}
+// @BasePath /api
+// @Router /url [get]
 func (s ShortUrl) List(c *gin.Context) {
-
+	var ulr entity.ShortUrlListRequest
+	if err := c.BindQuery(&ulr); err != nil {
+		s.responseJsonError(c, "Bind and validate params error, "+err.Error(), http.StatusBadRequest)
+		return
+	}
+	data, err := s.service.List(ulr)
+	if err != nil {
+		s.responseJsonError(c, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	s.responseJsonSuccess(c, data, http.StatusOK)
+	return
 }
